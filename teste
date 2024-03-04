@@ -1,0 +1,24 @@
+using Amazon.SecurityToken;
+using Amazon.SecurityToken.Model;
+
+class Program
+{
+    static async Task Main(string[] args)
+    {
+        string roleToAssumeArn = "arn:aws:iam::ACCOUNT_B_ID:role/ROLE_NAME";
+        string roleSessionName = "MySession";
+
+        var stsClient = new AmazonSecurityTokenServiceClient();
+
+        var assumeRoleRequest = new AssumeRoleRequest
+        {
+            RoleArn = roleToAssumeArn,
+            RoleSessionName = roleSessionName
+        };
+
+        var assumeRoleResponse = await stsClient.AssumeRoleAsync(assumeRoleRequest);
+
+        // Agora você pode acessar as credenciais temporárias do assumeRoleResponse.Credentials
+        // Use essas credenciais para fazer chamadas à AWS usando o SDK da AWS para .NET
+    }
+}
